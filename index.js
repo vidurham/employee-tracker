@@ -39,7 +39,7 @@ const firstQuestion = () => {
                 addEmployee();
                 break;
             case 'Add Role':
-                addRoles();
+                addRole();
                 break;
             case 'Add Department':
                 addDepartment();
@@ -97,5 +97,61 @@ const viewDepartments = () => {
         firstQuestion()
     })
 };
+
+const addEmployee = () => {
+    
+}
+
+const addRole = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'What role would you like to add?',
+            name: 'newRole'
+        },
+        {
+            type: 'input',
+            message: 'What is the salary of this role?',
+            name: 'salary'
+        },
+        {
+            type: 'input',
+            message: 'What is the department ID number for this role?',
+            name: 'dept_id'
+        }
+    ]).then((answers) => {
+        const query = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`
+        db.query(query, [answers.newRole, answers.salary, answers.dept_id], 
+            (err) => {
+                if (err) {
+                    throw err;
+                }
+                console.log('Added new Role')
+                console.table(answers)
+                firstQuestion()
+            })
+    })
+}
+
+const addDepartment = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'What department would you like to add?',
+            name: 'newDepartment'
+        }
+    ]).then((answer) => {
+        const query = `INSERT INTO departments (name) VALUES (?)`
+        db.query(query, answer.newDepartment, 
+        (err) => {
+            if (err) {
+                throw err;
+            }
+            console.log('Added new Department')
+            console.table(answer)
+            firstQuestion()
+        })
+    })
+}
 
 startTrack();
