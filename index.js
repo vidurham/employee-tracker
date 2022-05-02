@@ -62,11 +62,11 @@ const viewAllEmployees = () => {
         if (err) {
             throw err
         }
-        console.log('Viewing all employees')
-        console.log('===============================================')
-        console.table(res)
-        console.log('===============================================')
-        firstQuestion()
+        console.log('Viewing all employees');
+        console.log('===============================================');
+        console.table(res);
+        console.log('===============================================');
+        firstQuestion();
     })
 };
 
@@ -76,11 +76,11 @@ const viewRoles = () => {
         if (err) {
             throw err
         }
-        console.log('Viewing all roles')
-        console.log('===============================================')
-        console.table(res)
-        console.log('===============================================')
-        firstQuestion()
+        console.log('Viewing all roles');
+        console.log('===============================================');
+        console.table(res);
+        console.log('===============================================');
+        firstQuestion();
     })
 };
 
@@ -90,23 +90,57 @@ const viewDepartments = () => {
         if (err) {
             throw err
         }
-        console.log('Viewing all departments')
-        console.log('===============================================')
-        console.table(res)
-        console.log('===============================================')
-        firstQuestion()
+        console.log('Viewing all departments');
+        console.log('===============================================');
+        console.table(res);
+        console.log('===============================================');
+        firstQuestion();
     })
 };
 
 const addEmployee = () => {
-    
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'What is the first name of the employee you would you like to add?',
+            name: 'first_name'
+        },
+        {
+            type: 'input',
+            message: 'What is the last name of the employee you would you like to add?',
+            name: 'last_name'
+        },
+        {
+            type: 'input',
+            message: 'What is the role ID number of the employee you would you like to add?',
+            name: 'role'
+        },
+        {
+            type: 'input',
+            message: 'What is the manager ID number of the employee you would you like to add?',
+            name: 'manager'
+        }
+    ]).then((answers) => {
+        const query = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`
+        db.query(query, [answers.first_name, answers.last_name, answers.role, answers.manager], 
+            (err) => {
+                if (err) {
+                    throw err;
+                }
+                console.log('Added new Employee');
+                console.log('===============================================');
+                console.table(answers);
+                console.log('===============================================');
+                firstQuestion();
+            })
+    })
 }
 
 const addRole = () => {
     inquirer.prompt([
         {
             type: 'input',
-            message: 'What role would you like to add?',
+            message: 'What is the title of the role you would like to add?',
             name: 'newRole'
         },
         {
@@ -126,9 +160,11 @@ const addRole = () => {
                 if (err) {
                     throw err;
                 }
-                console.log('Added new Role')
-                console.table(answers)
-                firstQuestion()
+                console.log('Added new Role');
+                console.log('===============================================');
+                console.table(answers);
+                console.log('===============================================');
+                firstQuestion();
             })
     })
 }
@@ -147,9 +183,11 @@ const addDepartment = () => {
             if (err) {
                 throw err;
             }
-            console.log('Added new Department')
-            console.table(answer)
-            firstQuestion()
+            console.log('Added new Department');
+            console.log('===============================================');
+            console.table(answer);
+            console.log('===============================================');
+            firstQuestion();
         })
     })
 }
