@@ -21,6 +21,7 @@ const firstQuestion = () => {
                 'Add Employee',
                 'Add Role',
                 'Add Department',
+                "Update Employee's Role",
                 'Exit'
             ]
         }
@@ -43,6 +44,9 @@ const firstQuestion = () => {
                 break;
             case 'Add Department':
                 addDepartment();
+                break;
+            case "Update Employee's Role":
+                updateRole();
                 break;
             case 'Exit':
                 exit();
@@ -191,5 +195,61 @@ const addDepartment = () => {
         })
     })
 }
+
+
+const employeesArray = [];
+    const queryEmployees = `SELECT first_name FROM employees`
+    db.query(queryEmployees, (err, res) => {
+        if (err) {
+            throw err
+        }
+        res.forEach(({first_name}) => {
+            employeesArray.push(first_name);
+        });
+    });
+const rolesArray = [];
+    const queryRoles = `SELECT title FROM roles`
+    db.query(queryRoles, (err, res) => {
+        if (err) {
+            throw err
+        }
+        res.forEach(({title}) => {
+            rolesArray.push(title);
+        })
+    })
+
+const updateRole = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Which employee would you like to update?',
+            choices: employeesArray,
+            name: 'employeeUpdate'
+        },
+        {
+            type: 'list',
+            message: 'Which new role would you like for the employee?',
+            choices: rolesArray,
+            name: 'roleUpdate'
+        }
+    ]).then((answers) => {
+        const query = `SELECT id FROM roles WHERE title = ?`;
+        db.query(query, answers.roleUpdate, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            const newId = result[0].id;  
+            const query2 = `UPDATE employees SET role_id = ? where first_name = ?`
+            db.query(query2, [newId, answers.employeeUpdate], (err, result) => {
+                if (err) {
+                    throw err
+                }
+                console.log("Employee's Role has been updated")
+                console.log('===============================================');
+                firstQuestion();
+            })
+        })
+    })
+} 
 
 startTrack();
