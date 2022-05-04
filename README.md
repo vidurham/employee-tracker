@@ -10,7 +10,7 @@
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
-- [Demo}(#demo)
+- [Demo](#demo)
 
 ### Description
 A command line application that always you to build and manage an employee database using Node.js, Inquirer, and MySQL
