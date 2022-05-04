@@ -10,6 +10,7 @@
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
+- [Demo}(#demo)
 
 ### Description
 A command line application that always you to build and manage an employee database using Node.js, Inquirer, and MySQL
@@ -34,3 +35,4 @@ mysql -u root -p opens the mysql shell, npm install will install all of the depe
 If you have any questions, feel free to contact me via email, vdurham@luciddronetech.com, or visit my Github page at [vidurham](https://github.com/vidurham).
 
 ### Demo
+[Employee Tracker - Watch Video](https://www.loom.com/share/b0dc4e3e17184c29855578d306f9f4c1)
